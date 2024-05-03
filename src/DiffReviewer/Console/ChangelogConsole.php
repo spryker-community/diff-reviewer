@@ -19,6 +19,13 @@ class ChangelogConsole extends AbstractDiffReviewerConsole
     {
         $this->setName('diff-reviewer:change-log')
             ->setDescription('Creates a changelog that can be used in GitHub PR\'s.');
+
+
+        // Args
+
+        // Branch name
+        // path-to-repo
+        // PR link
     }
 
     /**
