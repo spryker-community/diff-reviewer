@@ -34,10 +34,11 @@ class Changelog
             $changelogData = $this->strategyRunner->getChangelog($item, $changelogData);
         }
 
-        var_dump($changelogData);die;
+        return $this->generateReleaseTemplate($changelogData);
+    }
 
-        // ???? Iterate over and tag
-
+    protected function generateReleaseTemplate(array $changeLogData): string
+    {
         $generatedChangelog = <<<EOT
 - Developer: @yaroslav-spryker
 
@@ -53,43 +54,43 @@ class Changelog
 
    Module                | Release Type         | Constraint Updates         |
    :--------------------- | :------------------------ | :--------------------- |
-   DynamicEntity  | minor                 |        |
-   DynamicEntityBackendApi  | minor                 |   DynamicEntity     |
+EOT . PHP_EOL;
+
+        foreach ($changeLogData as $moduleName => $moduleData) {
+            $releaseType = $moduleData['releaseType'];
+
+            $generatedChangelog .= <<<EOT
+$moduleName  | $releaseType                 |        |
+EOT . PHP_EOL;
+        }
+        $generatedChangelog .= <<<EOT
 
 -----------------------------------------
 
-#### Module DynamicEntity
+EOT . PHP_EOL;
+
+        foreach ($changeLogData as $moduleName => $moduleData) {
+            $generatedChangelog .= <<<EOT
+#### Module $moduleName
 
 ##### Change log
 
-Fixes
-
-- Adjusted `DynamicEntityFacade::updateDynamicEntityCollection()` so now it does not require identifier when `DynamicEntityCollectionRequestTransfer::\$isCreatable` is set to `true`.
-
-Improvements
-
-- Introduced `DynamicEntityCollectionRequestTransfer.resetNotProvidedFieldValues ` transfer field.
-
------------------------------------------
-
-#### Module DynamicEntityBackendApi
-
-##### Change log
-
-Fixes
-
-- Adjusted `DynamicEntityBackendApiController::putAction()`, so now it resets entity field values in case they are present in the configuration, but not provided in the request.
-
-Improvements
-
-- Introduced `DynamicEntityCollectionRequestTransfer.resetNotProvidedFieldValues` transfer field.
-- Adjusted `DynamicEntityBackendApiController::putAction()` to add support for child relation saving.
-
-Adjustments
-
-- Increased `DynamicEntity` module version dependency.
-
-EOT;
+EOT . PHP_EOL;
+            foreach ($moduleData as $type => $changes) {
+                //Ugly hack to get the type
+                if ($type === 'releaseType') {
+                    continue;
+                }
+                $generatedChangelog .= <<<EOT
+$type
+EOT . PHP_EOL . PHP_EOL;
+                foreach ($changes as $change) {
+                    $generatedChangelog .= <<<EOT
+- $change
+EOT . PHP_EOL;
+                }
+            }
+        }
         return $generatedChangelog;
     }
 }
