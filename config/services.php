@@ -85,4 +85,16 @@ return function (ContainerConfigurator $configurator): void {
     if ($configurator->env() === 'test') {
 //        $services->get(StructureDiffReviewer::class)->public();
     }
+
+    $services->set(\DiffReviewer\DiffReviewer\Tagger\FileTaggerInterface::class)
+        ->tag(\DiffReviewer\DiffReviewer\Tagger\FileTaggerInterface::class);
+
+    $services->set(\DiffReviewer\DiffReviewer\Tagger\ChunkTaggerInterface::class)
+        ->tag(\DiffReviewer\DiffReviewer\Tagger\ChunkTaggerInterface::class);
+
+    $services->set(\DiffReviewer\DiffReviewer\Tagger\Tagger::class)
+        ->args([
+            tagged_iterator(\DiffReviewer\DiffReviewer\Tagger\FileTaggerInterface::class),
+            tagged_iterator(\DiffReviewer\DiffReviewer\Tagger\ChunkTaggerInterface::class),
+        ]);
 };
