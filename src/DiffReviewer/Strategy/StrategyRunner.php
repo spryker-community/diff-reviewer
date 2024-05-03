@@ -2,6 +2,7 @@
 
 namespace DiffReviewer\DiffReviewer\Strategy;
 
+use DiffReviewer\DiffReviewer\Strategy\Changelog\PluginChangelogStrategy;
 use \IteratorAggregate;
 
 class StrategyRunner
@@ -14,6 +15,7 @@ class StrategyRunner
     {
         $this->strategies = [
             new \DiffReviewer\DiffReviewer\Strategy\Changelog\TransferChangelogStrategy(),
+            new PluginChangelogStrategy(),
         ];
     }
 
