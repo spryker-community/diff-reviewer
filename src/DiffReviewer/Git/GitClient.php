@@ -24,7 +24,7 @@ class GitClient
         $pr = $this->client->api('pr');
         $pr = $pr->configure('diff');
 
-        return $pr->show('spryker', 'spryker', 10768);
+        return $pr->show('spryker', 'spryker', 10939);
     }
 
     protected function createClient()
