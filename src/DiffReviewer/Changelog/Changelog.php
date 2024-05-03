@@ -16,6 +16,7 @@ class Changelog
     {
         // Get the diff
         $diff = $this->differ->getDiff();
+        echo '<pre>' . PHP_EOL . \Symfony\Component\VarDumper\VarDumper::dump($diff) . PHP_EOL . 'Line: ' . __LINE__ . PHP_EOL . 'File: ' . __FILE__ . die();
 
         $taggedDiff = $this->tagger->tagDiff($diff);
 
@@ -25,6 +26,11 @@ class Changelog
             // Array of strategies
             // StrategyInterface
 
+        $changelogData = [];
+
+        foreach ($taggedDiff as $item) {
+            $changelogData = $this->generateChangelogItem($item);
+        }
 
         // ???? Iterate over and tag
 
