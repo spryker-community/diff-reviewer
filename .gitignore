@@ -1,0 +1,27 @@
+# IDE
+.idea/
+.project/
+nbproject/
+.buildpath/
+.settings/
+*.sublime-*
+
+# OS
+.DS_Store
+*.AppleDouble
+*.AppleDB
+*.AppleDesktop
+
+# tooling
+vendor/
+compiler/vendor/
+composer.lock
+.phpunit.result.cache
+
+# PHAR
+tmp/spryk.phar
+bin/spryk.phar
+
+# tests
+var/*
+tests/_support/_generated/*

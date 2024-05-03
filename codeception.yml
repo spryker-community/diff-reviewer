@@ -1,0 +1,50 @@
+namespace: DiffReviewerTest
+
+paths:
+    tests: tests
+    output: tests/_output
+    data: tests/_data
+    support: tests/_support
+    envs: tests/_envs
+
+settings:
+    suite_class: \PHPUnit\Framework\TestSuite
+    colors: true
+    memory_limit: 2048M
+    log: true
+
+coverage:
+    enabled: true
+    remote: true
+    whitelist:
+        include:
+            - 'src/*.php'
+
+suites:
+    DiffReviewer:
+        path: DiffReviewerTest/DiffReviewer/Model
+        actor: DiffReviewerTester
+        extensions:
+            enabled:
+                - Codeception\Extension\RunFailed
+        modules:
+            enabled:
+                - Symfony:
+                      part: services
+                      app_path: 'src'
+                      kernel_class: 'DiffReviewer\Kernel'
+                      environment: 'test'
+
+    Console:
+        path: DiffReviewerTest/DiffReviewer/Console
+        actor: DiffReviewerConsoleTester
+        extensions:
+            enabled:
+                - Codeception\Extension\RunFailed
+        modules:
+            enabled:
+                - Symfony:
+                      part: services
+                      app_path: 'src'
+                      kernel_class: 'DiffReviewer\Kernel'
+                      environment: 'test'
