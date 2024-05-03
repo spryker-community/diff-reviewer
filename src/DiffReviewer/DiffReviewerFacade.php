@@ -7,19 +7,20 @@
 
 namespace DiffReviewer\DiffReviewer;
 
-use DiffReviewer\Kernel;
+use DiffReviewer\DiffReviewer\Changelog\Changelog;
 use DiffReviewer\DiffReviewer\Model\DiffReviewer\Executor\Configuration\DiffReviewerExecutorConfigurationInterface;
 use DiffReviewer\DiffReviewer\Style\DiffReviewerStyleInterface;
 
 class DiffReviewerFacade implements DiffReviewerFacadeInterface
 {
-    public function __construct(protected DiffReviewerFactory $factory)
-    {
+    public function __construct(
+        protected DiffReviewerFactory $factory,
+        protected Changelog $changelog
+    ) {
     }
 
     public function generateChangelog(): string {
-        // TODO: Implement review() method.
-//        $this->fac ()->getExecutor()->execute();
+        return $this->changelog->generateChangelog();
     }
 
     public function review(): void

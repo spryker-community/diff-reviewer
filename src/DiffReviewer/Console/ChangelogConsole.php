@@ -10,15 +10,15 @@ namespace DiffReviewer\DiffReviewer\Console;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class DiffReviewerBuildConsole extends AbstractDiffReviewerConsole
+class ChangelogConsole extends AbstractDiffReviewerConsole
 {
     /**
      * @return void
      */
     protected function configure(): void
     {
-        $this->setName('diff-reviewer:build')
-            ->setDescription('Builds a cache for all possible DiffReviewer arguments. This command must only be used if a new argument was supplied.');
+        $this->setName('diff-reviewer:change-log')
+            ->setDescription('Creates a changelog that can be used in GitHub PR\'s.');
     }
 
     /**
@@ -29,14 +29,11 @@ class DiffReviewerBuildConsole extends AbstractDiffReviewerConsole
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $output->writeln('Getting all DiffReviewer definitions...');
-        $sprykDefinitions = $this->getFacade()->getDiffReviewerDefinitions();
+        $output->writeln('Creating changelog...');
 
-        $output->writeln(sprintf('Found "%s" DiffReviewer definitions.', count($sprykDefinitions)));
+        $changelog = $this->getFacade()->generateChangelog();
 
-        $output->writeln('Generating argument list ...');
-        $this->getFacade()->generateArgumentList($sprykDefinitions);
-        $output->writeln('Argument list has been generated.');
+        $output->writeln($changelog);
 
         return static::CODE_SUCCESS;
     }

@@ -9,6 +9,7 @@ namespace DiffReviewer\DiffReviewer;
 
 interface DiffReviewerFacadeInterface
 {
+
     public function generateChangelog(): string;
 
     public function review(): void;
