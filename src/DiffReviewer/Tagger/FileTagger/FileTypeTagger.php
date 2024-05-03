@@ -8,15 +8,15 @@ class FileTypeTagger implements \DiffReviewer\DiffReviewer\Tagger\FileTaggerInte
 {
     public function tag(Diff $file, array $tags): array
     {
-        $from = $file->from();
+        $fileName = $file->from();
 
-        if (strpos($from, '.php') !== false) {
-            $tags[] = 'php';
+        if ($fileName === '/dev/null') {
+            $fileName = $file->to();
         }
 
-        if (strpos($from, '.neon') !== false) {
-            $tags[] = 'neon';
-        }
+        $fileNameParts = explode('.', $fileName);
+
+        $tags[] = end($fileNameParts);
 
         return $tags;
     }

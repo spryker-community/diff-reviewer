@@ -4,7 +4,11 @@ namespace DiffReviewer\DiffReviewer\Tagger;
 
 use DiffReviewer\DiffReviewer\Tagger\ChunkTagger\ChunkTagger;
 use DiffReviewer\DiffReviewer\Tagger\FileTagger\FileTypeTagger;
+use DiffReviewer\DiffReviewer\Tagger\FileTagger\NewFileTagger;
+use DiffReviewer\DiffReviewer\Tagger\FileTagger\PluginTagger;
+use DiffReviewer\DiffReviewer\Tagger\FileTagger\SchemaTagger;
 use IteratorAggregate;
+use mysql_xdevapi\Schema;
 
 class Tagger
 {
@@ -30,6 +34,9 @@ class Tagger
     {
         $this->fileTaggers = [
             new FileTypeTagger(),
+            new PluginTagger(),
+            new SchemaTagger(),
+            new NewFileTagger(),
         ];
         $this->chunkTaggers = [
             new ChunkTagger(),
