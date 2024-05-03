@@ -9,7 +9,7 @@ class PluginTagger implements FileTaggerInterface
 {
     public function tag(Diff $file, array $tags): array
     {
-        $from = $file->from();
+        $from = $file->to();
 
         if (str_ends_with($from, 'Plugin.php')) {
             $tags[] = 'plugin';
