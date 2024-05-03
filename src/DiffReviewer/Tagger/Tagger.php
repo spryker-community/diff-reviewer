@@ -12,35 +12,12 @@ use mysql_xdevapi\Schema;
 
 class Tagger
 {
-//    /**
-//     * @param IteratorAggregate<\DiffReviewer\DiffReviewer\Tagger\FileTaggerInterface> $fileTaggers
-//     * @param IteratorAggregate<\DiffReviewer\DiffReviewer\Tagger\ChunkTaggerInterface> $chunkTaggers
-//     */
-//    public function __construct(protected IteratorAggregate $fileTaggers, protected IteratorAggregate $chunkTaggers)
-//    {
-//    }
-
     /**
-     * @var array<\DiffReviewer\DiffReviewer\Tagger\FileTaggerInterface>
+     * @param IteratorAggregate<\DiffReviewer\DiffReviewer\Tagger\FileTaggerInterface> $fileTaggers
+     * @param IteratorAggregate<\DiffReviewer\DiffReviewer\Tagger\ChunkTaggerInterface> $chunkTaggers
      */
-    protected $fileTaggers = [];
-
-    /**
-     * @var array<\DiffReviewer\DiffReviewer\Tagger\ChunkTaggerInterface>
-     */
-    protected $chunkTaggers = [];
-
-    public function __construct()
+    public function __construct(protected IteratorAggregate $fileTaggers, protected IteratorAggregate $chunkTaggers)
     {
-        $this->fileTaggers = [
-            new FileTypeTagger(),
-            new PluginTagger(),
-            new SchemaTagger(),
-            new NewFileTagger(),
-        ];
-        $this->chunkTaggers = [
-            new ChunkTagger(),
-        ];
     }
 
     public function tagDiff(array $diffCollection): array

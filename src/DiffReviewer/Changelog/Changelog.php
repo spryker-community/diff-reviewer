@@ -22,12 +22,6 @@ class Changelog
 
         $taggedDiff = $this->tagger->tagDiff($diff);
 
-        // ???? Iterate over and remove not needed files
-
-            // Based on file type go into some Strategies like Xml, JsonStrategy, etc
-            // Array of strategies
-            // StrategyInterface
-
         $changelogData = [];
 
         foreach ($taggedDiff as $item) {

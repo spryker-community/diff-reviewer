@@ -3,8 +3,9 @@
 namespace DiffReviewer\DiffReviewer\Tagger\FileTagger;
 
 use SebastianBergmann\Diff\Diff;
+use DiffReviewer\DiffReviewer\Tagger\FileTaggerInterface;
 
-class SchemaTagger implements \DiffReviewer\DiffReviewer\Tagger\FileTaggerInterface
+class SchemaTagger implements FileTaggerInterface
 {
     public function tag(Diff $file, array $tags): array
     {
