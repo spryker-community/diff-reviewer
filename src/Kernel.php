@@ -36,9 +36,6 @@ class Kernel extends BaseKernel
     public function build(ContainerBuilder $container): void
     {
         parent::build($container);
-
-        $container->addCompilerPass(new AutowireArrayParameterCompilerPass());
-        $container->addCompilerPass(new TwigCompilerPass());
     }
 
     /**
