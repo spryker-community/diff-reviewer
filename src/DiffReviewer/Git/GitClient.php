@@ -27,7 +27,7 @@ class GitClient
     protected function createClient()
     {
         $client = Client::createWithHttpClient(new GuzzleClient());
-        $client->authenticate('PUT_TOKEN_HERE', null, Client::AUTH_ACCESS_TOKEN);
+        $client->authenticate('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', null, Client::AUTH_ACCESS_TOKEN);
 
         return $client;
     }
