@@ -3,13 +3,16 @@
 namespace DiffReviewer\DiffReviewer\Changelog;
 
 use DiffReviewer\DiffReviewer\Differ\Differ;
+use DiffReviewer\DiffReviewer\Strategy\StrategyRunner;
 use DiffReviewer\DiffReviewer\Tagger\Tagger;
 
 class Changelog
 {
-    public function __construct(protected Differ $differ, protected Tagger $tagger)
-    {
-    }
+    public function __construct(
+        protected Differ $differ,
+        protected Tagger $tagger,
+        protected StrategyRunner $strategyRunner
+    ) {}
 
 
     public function generateChangelog(): string
@@ -28,8 +31,10 @@ class Changelog
         $changelogData = [];
 
         foreach ($taggedDiff as $item) {
-            $changelogData = $this->generateChangelogItem($item);
+            $changelogData = $this->strategyRunner->getChangelog($item, $changelogData);
         }
+
+        var_dump($changelogData);die;
 
         // ???? Iterate over and tag
 
