@@ -8,7 +8,10 @@
         "ext-dom": "*",
         "ext-simplexml": "*",
         "doctrine/inflector": "*",
+        "guzzlehttp/guzzle": "^7.0.1",
+        "http-interop/http-factory-guzzle": "^1.0",
         "jfcherng/php-diff": "*",
+        "knplabs/github-api": "^3.0",
         "laminas/laminas-filter": "*",
         "nikic/php-parser": "*",
         "symfony/console": "^7.0.0",
@@ -71,7 +74,8 @@
         "sort-packages": true,
         "allow-plugins": {
             "dealerdirect/phpcodesniffer-composer-installer": true,
-            "symfony/runtime": true
+            "symfony/runtime": true,
+            "php-http/discovery": false
         }
     },
     "bin": [

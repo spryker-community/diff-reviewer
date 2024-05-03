@@ -16,8 +16,6 @@ class Changelog
         // Get the diff
         $diff = $this->differ->getDiff();
 
-        
-
         // ???? Iterate over and remove not needed files
 
             // Based on file type go into some Strategies like Xml, JsonStrategy, etc
