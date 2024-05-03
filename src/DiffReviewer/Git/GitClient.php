@@ -30,7 +30,7 @@ class GitClient
     protected function createClient()
     {
         $client = Client::createWithHttpClient(new HttplugClient());
-        $client->authenticate('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', null, AuthMethod::ACCESS_TOKEN);
+        $client->authenticate(getenv('CHANGELOG_TOKEN'), null, AuthMethod::ACCESS_TOKEN);
 
         return $client;
     }
