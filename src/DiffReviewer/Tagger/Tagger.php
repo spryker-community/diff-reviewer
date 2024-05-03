@@ -2,29 +2,54 @@
 
 namespace DiffReviewer\DiffReviewer\Tagger;
 
+use DiffReviewer\DiffReviewer\Tagger\ChunkTagger\ChunkTagger;
+use DiffReviewer\DiffReviewer\Tagger\FileTagger\FileTypeTagger;
 use IteratorAggregate;
 
 class Tagger
 {
+//    /**
+//     * @param IteratorAggregate<\DiffReviewer\DiffReviewer\Tagger\FileTaggerInterface> $fileTaggers
+//     * @param IteratorAggregate<\DiffReviewer\DiffReviewer\Tagger\ChunkTaggerInterface> $chunkTaggers
+//     */
+//    public function __construct(protected IteratorAggregate $fileTaggers, protected IteratorAggregate $chunkTaggers)
+//    {
+//    }
+
     /**
-     * @param IteratorAggregate<\DiffReviewer\DiffReviewer\Tagger\FileTaggerInterface> $fileTaggers
-     * @param IteratorAggregate<\DiffReviewer\DiffReviewer\Tagger\ChunkTaggerInterface> $chunkTaggers
+     * @var array<\DiffReviewer\DiffReviewer\Tagger\FileTaggerInterface>
      */
-    public function __construct(protected IteratorAggregate $fileTaggers, protected IteratorAggregate $chunkTaggers)
+    protected $fileTaggers = [];
+
+    /**
+     * @var array<\DiffReviewer\DiffReviewer\Tagger\ChunkTaggerInterface>
+     */
+    protected $chunkTaggers = [];
+
+    public function __construct()
     {
+        $this->fileTaggers = [
+            new FileTypeTagger(),
+        ];
+        $this->chunkTaggers = [
+            new ChunkTagger(),
+        ];
     }
 
-    public function tagDiff(array $diff): array
+    public function tagDiff(array $diffCollection): array
     {
-        foreach ($diff as $fileDiff) {
-            $fileDiff['tags'] = $this->getFileTags($fileDiff);
+        $taggedDiff = [];
 
-            foreach ($fileDiff as $chunk) {
-                $chunk['tags'] = $this->getChunkTags($chunk);
-            }
+        foreach ($diffCollection as $diff) {
+            $newDiff = [
+                'diff' => $diff,
+                'tags' => $this->getFileTags($diff),
+            ];
+
+            $taggedDiff[] = $newDiff;
         }
 
-        return $diff;
+        return $taggedDiff;
     }
 
     protected function getFileTags($file): array
